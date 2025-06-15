@@ -1,3 +1,21 @@
+{
+# Use an official OpenJDK image from the Docker Hub
+FROM openjdk:17-alpine
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the local Java source file to the container
+COPY Sample.java .
+
+# Compile the Java file
+RUN javac Sample.java
+
+# Run the Java program
+CMD ["java", "Sample"]
+
+}
+
 pipeline {
   agent any
 
@@ -5,7 +23,7 @@ pipeline {
     stage('Build') {
       steps {
         bat 'docker build -t myjava1 .'
-        bat 'docker tag myjava1 $DOCKER_BFLASK_IMAGE'
+        bat  'docker tag myjava1 $DOCKER_BFLASK_IMAGE'
       }
     }
     stage('Test') {
